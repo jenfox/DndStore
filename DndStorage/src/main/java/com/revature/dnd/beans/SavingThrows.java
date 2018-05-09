@@ -1,10 +1,12 @@
 package com.revature.dnd.beans;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
 
 /**
  * Saving Throws Tables - storing proficiencies
  */
+@Entity
 public class SavingThrows {
 
 	@Id

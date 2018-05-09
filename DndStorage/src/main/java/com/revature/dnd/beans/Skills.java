@@ -1,10 +1,12 @@
 package com.revature.dnd.beans;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
 
 /**
  * Skill Table, stores each skill multiplier value for a character
  */
+@Entity
 public class Skills {
 
 	@Id

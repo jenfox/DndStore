@@ -6,4 +6,5 @@ import com.revature.dnd.beans.Character;
 
 public interface CharacterRepo extends JpaRepository<Character, Integer> {
 
+	public Character getByCharacterName(String characterName);
 }

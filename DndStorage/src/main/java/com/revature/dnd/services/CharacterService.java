@@ -18,8 +18,12 @@ public class CharacterService {
 		return characterRepo.getOne(id);
 	}
 
-	public void postCharacter(Character character) {
-		characterRepo.save(character);
+	public Character getCharacterByName(String characterName) {
+		return characterRepo.getByCharacterName(characterName);
+	}
+
+	public boolean postCharacter(Character character) {
+		return characterRepo.save(character) != null;
 	}
 
 	public List<Character> getAllCharacters() {

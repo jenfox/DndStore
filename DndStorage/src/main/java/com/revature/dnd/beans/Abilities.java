@@ -1,11 +1,13 @@
 package com.revature.dnd.beans;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
 
 /**
  *
  * Ability Table, stores score of each ability
  */
+@Entity
 public class Abilities {
 
 	@Id

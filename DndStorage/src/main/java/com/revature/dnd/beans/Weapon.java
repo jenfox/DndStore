@@ -1,10 +1,17 @@
 package com.revature.dnd.beans;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Weapon {
 
 	public static enum DamageType {
 		Acid, Bludgeoning, Cold, Fire, Force, Lightning, Necrotic, Piercing, Poison, Psychic, Radiant, Slashing, Thunder
 	}
+
+	@Id
+	private Integer characterId;
 
 	private String name;
 	private Integer attackBonus;

@@ -3,6 +3,7 @@ package com.revature.dnd.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,23 +20,27 @@ public class CharacterController {
 	private CharacterService characterService;
 
 	@GetMapping("/character/{id}")
-	public Character getCharacter(@PathVariable Integer id) {
+	public ResponseEntity<Character> getCharacter(@PathVariable Integer id) {
 
-		return characterService.getCharacterById(id);
+		return ResponseEntity.ok(characterService.getCharacterById(id));
+	}
+
+	@GetMapping("/character/name/{characterName}")
+	public ResponseEntity<Character> getCharacter(@PathVariable String characterName) {
+
+		return ResponseEntity.ok(characterService.getCharacterByName(characterName));
 	}
 
 	@PostMapping("/character")
-	public String postCharacter(@RequestBody Character character) {
+	public ResponseEntity<Boolean> postCharacter(@RequestBody Character character) {
 
-		characterService.postCharacter(character);
-
-		return "Posted?";
+		return ResponseEntity.ok(characterService.postCharacter(character));
 	}
 
 	@GetMapping("/characters")
-	public List<Character> getCharacters() {
+	public ResponseEntity<List<Character>> getAllCharacters() {
 
-		return characterService.getAllCharacters();
+		return ResponseEntity.ok(characterService.getAllCharacters());
 	}
 
 }
