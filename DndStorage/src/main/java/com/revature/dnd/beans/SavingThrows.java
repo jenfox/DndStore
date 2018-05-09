@@ -1,6 +1,8 @@
 package com.revature.dnd.beans;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
@@ -10,17 +12,18 @@ import javax.persistence.Id;
 public class SavingThrows {
 
 	@Id
-	private Integer characterId;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
 
 	private Boolean Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma;
 
 	public SavingThrows() {
 	}
 
-	public SavingThrows(Integer characterId, Boolean strength, Boolean dexterity, Boolean constitution,
-			Boolean intelligence, Boolean wisdom, Boolean charisma) {
+	public SavingThrows(Integer id, Boolean strength, Boolean dexterity, Boolean constitution, Boolean intelligence,
+			Boolean wisdom, Boolean charisma) {
 		super();
-		this.characterId = characterId;
+		this.id = id;
 		Strength = strength;
 		Dexterity = dexterity;
 		Constitution = constitution;
@@ -29,12 +32,12 @@ public class SavingThrows {
 		Charisma = charisma;
 	}
 
-	public Integer getCharacterId() {
-		return characterId;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setCharacterId(Integer characterId) {
-		this.characterId = characterId;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public Boolean getStrength() {
