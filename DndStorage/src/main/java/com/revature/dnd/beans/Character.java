@@ -8,6 +8,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  * DnD Character Bean
@@ -19,57 +20,60 @@ public class Character {
 		LawfulGood, LawfulNeutral, LawfulEvil, NeutralGood, TrueNeutral, NeutralEvil, ChaoticGood, ChaoticNeutral, ChaoticEvil
 	}
 
-	public static enum Attribute {
-		Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma
-	}
-
-	public static enum Skill {
-		Acrobatics, AnimalHandling, Arcana, Athletics, Deception, History, Insight, Intimidation, Investigation, Medicine, Nature, Perception, Performance, Persuasion, Religion, SlightOfHand, Stealth, Survival
-	}
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
-	private String name;
+	// Top part
+	private String characterName;
 	private String className;
 	private int level;
 	private String background;
 	private String playerName;
 	private String race;
-
 	private Alignment alignment;
 	private int experiencePoints;
 
-	// private List<Attribute> attributes;
-	// private List<Skill> skills;
-	// private List<String> languages;
+	// 1/3 Col of character sheet
+	@OneToOne
+	private Abilities abilities;
+	private Boolean inspiration;
+	private Integer proficiencyBonus;
+	@OneToOne
+	private Skills skills;
+	private Integer passivePerception;
+	private List<String> languages;
+	private List<String> otherProficiences;
 
-	private int armorClass;
-	private int initiative;
+	// 2/3 Col of character Sheet
+	private Integer armorClass;
+	private Integer initiative;
+	private Integer speed;
+	private Integer hitpointMaximum;
+	private Integer currentHitPoints;
+
+	private Integer temporaryHitPoints;
+
+	private Integer hitDiceTotal;
+	private String hitDiceType;
+	private Integer deathSavesSuccesses;
+	private Integer deathSavesFailures;
+
+	private List<Weapon> attacks;
+	private List<String> equipment;
+
+	// 3/3 COl
+	private List<String> personalityTraits;
+	private List<String> ideals;
+	private List<String> bonds;
+	private List<String> flaws;
+
+	private List<String> featuresAndTraits;
+
+	// Spell List
 
 	public Character() {
 
-	}
-
-	public Character(Integer id, String name, String className, int level, String background, String playerName,
-			String race, Alignment alignment, int experiencePoints, List<Attribute> attributes, List<Skill> skills,
-			List<String> languages, int armorClass, int initiative) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.className = className;
-		this.level = level;
-		this.background = background;
-		this.playerName = playerName;
-		this.race = race;
-		this.alignment = alignment;
-		this.experiencePoints = experiencePoints;
-		// this.attributes = attributes;
-		// this.skills = skills;
-		// this.languages = languages;
-		this.armorClass = armorClass;
-		this.initiative = initiative;
 	}
 
 	public Integer getId() {
@@ -81,11 +85,11 @@ public class Character {
 	}
 
 	public String getName() {
-		return name;
+		return characterName;
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.characterName = name;
 	}
 
 	public String getClassName() {
