@@ -1,6 +1,8 @@
 package com.revature.dnd.beans;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
@@ -10,7 +12,8 @@ import javax.persistence.Id;
 public class Skills {
 
 	@Id
-	private Integer characterId;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
 
 	/*
 	 * storing prof multiplier 0- not prof, 1- prof, 2- expertise (2x)
@@ -22,12 +25,12 @@ public class Skills {
 	public Skills() {
 	}
 
-	public Skills(Integer characterId, Integer acrobatics, Integer animalHandling, Integer arcana, Integer athletics,
+	public Skills(Integer id, Integer acrobatics, Integer animalHandling, Integer arcana, Integer athletics,
 			Integer deception, Integer history, Integer insight, Integer intimidation, Integer investigation,
 			Integer medicine, Integer nature, Integer perception, Integer performance, Integer persuasion,
 			Integer religion, Integer slightOfHand, Integer stealth, Integer survival) {
 		super();
-		this.characterId = characterId;
+		this.id = id;
 		Acrobatics = acrobatics;
 		AnimalHandling = animalHandling;
 		Arcana = arcana;
@@ -48,12 +51,12 @@ public class Skills {
 		Survival = survival;
 	}
 
-	public Integer getCharacterId() {
-		return characterId;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setCharacterId(Integer characterId) {
-		this.characterId = characterId;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public Integer getAcrobatics() {

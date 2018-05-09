@@ -64,7 +64,7 @@ public class Character {
 	private Integer deathSavesSuccesses;
 	private Integer deathSavesFailures;
 
-	@OneToMany(mappedBy = "characterId")
+	@OneToMany
 	private List<Weapon> attacks;
 	@ElementCollection
 	private List<String> equipment = new ArrayList<>();
