@@ -69,7 +69,7 @@ public class Character {
 	@ElementCollection
 	private List<String> equipment = new ArrayList<>();
 
-	// 3/3 COl
+	// 3/3 Col of character sheet
 	@ElementCollection
 	private List<String> personalityTraits = new ArrayList<>();
 	@ElementCollection
