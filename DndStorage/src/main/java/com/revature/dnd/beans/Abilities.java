@@ -1,44 +1,28 @@
 package com.revature.dnd.beans;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.Embeddable;
 
 /**
  *
  * Ability Table, stores score of each ability
  */
-@Entity
+@Embeddable
 public class Abilities {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
 
 	private Integer Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma;
 
 	public Abilities() {
 	}
 
-	public Abilities(Integer id, Integer strength, Integer dexterity, Integer constitution, Integer intelligence,
-			Integer wisdom, Integer charisma) {
+	public Abilities(Integer strength, Integer dexterity, Integer constitution, Integer intelligence, Integer wisdom,
+			Integer charisma) {
 		super();
-		this.id = id;
 		Strength = strength;
 		Dexterity = dexterity;
 		Constitution = constitution;
 		Intelligence = intelligence;
 		Wisdom = wisdom;
 		Charisma = charisma;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public Integer getStrength() {

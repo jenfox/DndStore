@@ -1,19 +1,12 @@
 package com.revature.dnd.beans;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.Embeddable;
 
 /**
  * Skill Table, stores each skill multiplier value for a character
  */
-@Entity
+@Embeddable
 public class Skills {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
 
 	/*
 	 * storing prof multiplier 0- not prof, 1- prof, 2- expertise (2x)
@@ -25,12 +18,11 @@ public class Skills {
 	public Skills() {
 	}
 
-	public Skills(Integer id, Integer acrobatics, Integer animalHandling, Integer arcana, Integer athletics,
-			Integer deception, Integer history, Integer insight, Integer intimidation, Integer investigation,
-			Integer medicine, Integer nature, Integer perception, Integer performance, Integer persuasion,
-			Integer religion, Integer slightOfHand, Integer stealth, Integer survival) {
+	public Skills(Integer acrobatics, Integer animalHandling, Integer arcana, Integer athletics, Integer deception,
+			Integer history, Integer insight, Integer intimidation, Integer investigation, Integer medicine,
+			Integer nature, Integer perception, Integer performance, Integer persuasion, Integer religion,
+			Integer slightOfHand, Integer stealth, Integer survival) {
 		super();
-		this.id = id;
 		Acrobatics = acrobatics;
 		AnimalHandling = animalHandling;
 		Arcana = arcana;
@@ -49,14 +41,6 @@ public class Skills {
 		SlightOfHand = slightOfHand;
 		Stealth = stealth;
 		Survival = survival;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public Integer getAcrobatics() {

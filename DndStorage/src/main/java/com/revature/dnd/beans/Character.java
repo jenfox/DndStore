@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -11,7 +12,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 /**
  * DnD Character Bean
@@ -38,11 +38,11 @@ public class Character {
 	private int experiencePoints;
 
 	// 1/3 Col of character sheet
-	@OneToOne
+	@Embedded
 	private Abilities abilities;
 	private Boolean inspiration;
 	private Integer proficiencyBonus;
-	@OneToOne
+	@Embedded
 	private Skills skills;
 	private Integer passivePerception;
 	@ElementCollection
