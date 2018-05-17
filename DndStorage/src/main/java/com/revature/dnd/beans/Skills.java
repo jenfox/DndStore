@@ -1,6 +1,7 @@
 package com.revature.dnd.beans;
 
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
 
 /**
  * Skill Table, stores each skill multiplier value for a character
@@ -11,6 +12,7 @@ public class Skills {
 	/*
 	 * storing prof multiplier 0- not prof, 1- prof, 2- expertise (2x)
 	 */
+	@NotNull
 	private Integer Acrobatics, AnimalHandling, Arcana, Athletics, Deception, History, Insight, Intimidation,
 			Investigation, Medicine, Nature, Perception, Performance, Persuasion, Religion, SlightOfHand, Stealth,
 			Survival;
@@ -185,6 +187,16 @@ public class Skills {
 
 	public void setSurvival(Integer survival) {
 		Survival = survival;
+	}
+
+	@Override
+	public String toString() {
+		return "Skills [Acrobatics=" + Acrobatics + ", AnimalHandling=" + AnimalHandling + ", Arcana=" + Arcana
+				+ ", Athletics=" + Athletics + ", Deception=" + Deception + ", History=" + History + ", Insight="
+				+ Insight + ", Intimidation=" + Intimidation + ", Investigation=" + Investigation + ", Medicine="
+				+ Medicine + ", Nature=" + Nature + ", Perception=" + Perception + ", Performance=" + Performance
+				+ ", Persuasion=" + Persuasion + ", Religion=" + Religion + ", SlightOfHand=" + SlightOfHand
+				+ ", Stealth=" + Stealth + ", Survival=" + Survival + "]";
 	}
 
 }

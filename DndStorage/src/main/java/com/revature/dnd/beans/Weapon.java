@@ -4,13 +4,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "WEAPONS")
 public class Weapon {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+
+	private Integer characterId;
 
 	public static enum DamageType {
 		Acid, Bludgeoning, Cold, Fire, Force, Lightning, Necrotic, Piercing, Poison, Psychic, Radiant, Slashing, Thunder
@@ -24,9 +28,11 @@ public class Weapon {
 	public Weapon() {
 	}
 
-	public Weapon(Integer id, String name, Integer attackBonus, DamageType damageType, String damage) {
+	public Weapon(Integer id, Integer characterId, String name, Integer attackBonus, DamageType damageType,
+			String damage) {
 		super();
 		this.id = id;
+		this.characterId = characterId;
 		this.name = name;
 		this.attackBonus = attackBonus;
 		this.damageType = damageType;
@@ -34,11 +40,19 @@ public class Weapon {
 	}
 
 	public Integer getId() {
-		return id;
+		return characterId;
 	}
 
 	public void setId(Integer id) {
-		this.id = id;
+		this.characterId = id;
+	}
+
+	public Integer getCharacterId() {
+		return characterId;
+	}
+
+	public void setCharacterId(Integer characterId) {
+		this.characterId = characterId;
 	}
 
 	public String getName() {
@@ -71,6 +85,12 @@ public class Weapon {
 
 	public void setDamage(String damage) {
 		this.damage = damage;
+	}
+
+	@Override
+	public String toString() {
+		return "Weapon [id=" + id + ", characterId=" + characterId + ", name=" + name + ", attackBonus=" + attackBonus
+				+ ", damageType=" + damageType + ", damage=" + damage + "]";
 	}
 
 }

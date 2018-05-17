@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 /**
  * Saving Throws Tables - storing proficiencies
@@ -15,21 +16,26 @@ public class SavingThrows {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
-	private Boolean Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma;
+	private Integer characterId;
+
+	@NotNull
+	private Boolean strength, dexterity, constitution, intelligence, wisdom, charisma;
 
 	public SavingThrows() {
 	}
 
-	public SavingThrows(Integer id, Boolean strength, Boolean dexterity, Boolean constitution, Boolean intelligence,
-			Boolean wisdom, Boolean charisma) {
+	public SavingThrows(Integer id, Integer characterId, @NotNull Boolean strength, @NotNull Boolean dexterity,
+			@NotNull Boolean constitution, @NotNull Boolean intelligence, @NotNull Boolean wisdom,
+			@NotNull Boolean charisma) {
 		super();
 		this.id = id;
-		Strength = strength;
-		Dexterity = dexterity;
-		Constitution = constitution;
-		Intelligence = intelligence;
-		Wisdom = wisdom;
-		Charisma = charisma;
+		this.characterId = characterId;
+		this.strength = strength;
+		this.dexterity = dexterity;
+		this.constitution = constitution;
+		this.intelligence = intelligence;
+		this.wisdom = wisdom;
+		this.charisma = charisma;
 	}
 
 	public Integer getId() {
@@ -40,52 +46,67 @@ public class SavingThrows {
 		this.id = id;
 	}
 
+	public Integer getCharacterId() {
+		return characterId;
+	}
+
+	public void setCharacterId(Integer characterId) {
+		this.characterId = characterId;
+	}
+
 	public Boolean getStrength() {
-		return Strength;
+		return strength;
 	}
 
 	public void setStrength(Boolean strength) {
-		Strength = strength;
+		this.strength = strength;
 	}
 
 	public Boolean getDexterity() {
-		return Dexterity;
+		return dexterity;
 	}
 
 	public void setDexterity(Boolean dexterity) {
-		Dexterity = dexterity;
+		this.dexterity = dexterity;
 	}
 
 	public Boolean getConstitution() {
-		return Constitution;
+		return constitution;
 	}
 
 	public void setConstitution(Boolean constitution) {
-		Constitution = constitution;
+		this.constitution = constitution;
 	}
 
 	public Boolean getIntelligence() {
-		return Intelligence;
+		return intelligence;
 	}
 
 	public void setIntelligence(Boolean intelligence) {
-		Intelligence = intelligence;
+		this.intelligence = intelligence;
 	}
 
 	public Boolean getWisdom() {
-		return Wisdom;
+		return wisdom;
 	}
 
 	public void setWisdom(Boolean wisdom) {
-		Wisdom = wisdom;
+		this.wisdom = wisdom;
 	}
 
 	public Boolean getCharisma() {
-		return Charisma;
+		return charisma;
 	}
 
 	public void setCharisma(Boolean charisma) {
-		Charisma = charisma;
+		this.charisma = charisma;
+	}
+
+	@Override
+	public String toString() {
+		return "SavingThrows [id=" + id + ", characterId=" + characterId + ", strength=" + strength + ", dexterity="
+				+ dexterity + ", constitution=" + constitution + ", intelligence=" + intelligence + ", wisdom=" + wisdom
+				+ ", charisma=" + charisma + "]";
 	}
 
 }

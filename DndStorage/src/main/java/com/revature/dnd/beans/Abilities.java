@@ -1,21 +1,22 @@
 package com.revature.dnd.beans;
 
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
 
 /**
- *
  * Ability Table, stores score of each ability
  */
 @Embeddable
 public class Abilities {
 
+	@NotNull
 	private Integer Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma;
 
 	public Abilities() {
 	}
 
-	public Abilities(Integer strength, Integer dexterity, Integer constitution, Integer intelligence, Integer wisdom,
-			Integer charisma) {
+	public Abilities(@NotNull Integer strength, @NotNull Integer dexterity, @NotNull Integer constitution,
+			@NotNull Integer intelligence, @NotNull Integer wisdom, @NotNull Integer charisma) {
 		super();
 		Strength = strength;
 		Dexterity = dexterity;
@@ -71,6 +72,12 @@ public class Abilities {
 
 	public void setCharisma(Integer charisma) {
 		Charisma = charisma;
+	}
+
+	@Override
+	public String toString() {
+		return "Abilities [Strength=" + Strength + ", Dexterity=" + Dexterity + ", Constitution=" + Constitution
+				+ ", Intelligence=" + Intelligence + ", Wisdom=" + Wisdom + ", Charisma=" + Charisma + "]";
 	}
 
 }

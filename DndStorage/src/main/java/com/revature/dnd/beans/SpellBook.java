@@ -2,17 +2,15 @@ package com.revature.dnd.beans;
 
 import javax.persistence.Id;
 
+import com.revature.dnd.beans.Enums.ABILITIES;
+
 //TODO make a valid entity
 public class SpellBook {
-
-	public static enum ABILITIES {
-		Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma
-	}
 
 	@Id
 	private Integer characterId;
 
-	private ABILITIES spellcastingAbility;
+	private com.revature.dnd.beans.Enums.ABILITIES spellcastingAbility;
 	private Integer spellSaveDC;
 	private Integer spellAttackBonus;
 

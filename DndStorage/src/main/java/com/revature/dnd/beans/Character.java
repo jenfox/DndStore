@@ -1,27 +1,31 @@
 package com.revature.dnd.beans;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.ElementCollection;
+import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import com.revature.dnd.beans.Enums.ALIGNMENT;
+import com.revature.dnd.beans.element.Feature;
+import com.revature.dnd.beans.element.Flaw;
+import com.revature.dnd.beans.element.Ideal;
+import com.revature.dnd.beans.element.PersonalityTrait;
+import com.revature.dnd.beans.element.Trait;
 
 /**
  * DnD Character Bean
  */
 @Entity
+@Table(name = "CHARACTERS")
 public class Character {
-
-	public static enum Alignment {
-		LawfulGood, LawfulNeutral, LawfulEvil, NeutralGood, TrueNeutral, NeutralEvil, ChaoticGood, ChaoticNeutral, ChaoticEvil
-	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,10 +38,10 @@ public class Character {
 	private String background;
 	private String playerName;
 	private String race;
-	private Alignment alignment;
+	private ALIGNMENT alignment;
 	private int experiencePoints;
 
-	// 1/3 Col of character sheet
+	// Col 1
 	@Embedded
 	private Abilities abilities;
 	private Boolean inspiration;
@@ -45,12 +49,13 @@ public class Character {
 	@Embedded
 	private Skills skills;
 	private Integer passivePerception;
-	@ElementCollection
-	private List<String> languages = new ArrayList<>();
-	@ElementCollection
-	private List<String> otherProficiences = new ArrayList<>();
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Language> languages;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "characterId")
+	private SavingThrows SavingThrows;
 
-	// 2/3 Col of character Sheet
+	// Col 2
 	private Integer armorClass;
 	private Integer initiative;
 	private Integer speed;
@@ -64,36 +69,38 @@ public class Character {
 	private Integer deathSavesSuccesses;
 	private Integer deathSavesFailures;
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "characterId")
 	private List<Weapon> attacks;
-	@ElementCollection
-	private List<String> equipment = new ArrayList<>();
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "characterId")
+	private List<Equipment> equipment;
 
-	// 3/3 Col of character sheet
-	@ElementCollection
-	private List<String> personalityTraits = new ArrayList<>();
-	@ElementCollection
-	private List<String> ideals = new ArrayList<>();
-	@ElementCollection
-	private List<String> bonds = new ArrayList<>();
-	@ElementCollection
-	private List<String> flaws = new ArrayList<>();
+	// Col 3
+	@OneToMany(mappedBy = "characterId")
+	private List<PersonalityTrait> personalityTraits;
+	@OneToMany(mappedBy = "characterId")
+	private List<Ideal> ideals;
+	@OneToMany(mappedBy = "characterId")
+	private List<PersonalityTrait> bonds;
+	@OneToMany(mappedBy = "characterId")
+	private List<Flaw> flaws;
 
-	@ElementCollection
-	private List<String> featuresAndTraits = new ArrayList<>();
+	@OneToMany(mappedBy = "characterId")
+	private List<Feature> features;
+	@OneToMany(mappedBy = "characterId")
+	private List<Trait> traits;
 
 	public Character() {
-
 	}
 
 	public Character(Integer characterId, String characterName, String className, int level, String background,
-			String playerName, String race, Alignment alignment, int experiencePoints, Abilities abilities,
+			String playerName, String race, ALIGNMENT alignment, int experiencePoints, Abilities abilities,
 			Boolean inspiration, Integer proficiencyBonus, Skills skills, Integer passivePerception,
-			List<String> languages, List<String> otherProficiences, Integer armorClass, Integer initiative,
-			Integer speed, Integer hitpointMaximum, Integer currentHitPoints, Integer temporaryHitPoints,
-			Integer hitDiceTotal, String hitDiceType, Integer deathSavesSuccesses, Integer deathSavesFailures,
-			List<Weapon> attacks, List<String> equipment, List<String> personalityTraits, List<String> ideals,
-			List<String> bonds, List<String> flaws, List<String> featuresAndTraits) {
+			List<Language> languages, com.revature.dnd.beans.SavingThrows savingThrows, Integer armorClass,
+			Integer initiative, Integer speed, Integer hitpointMaximum, Integer currentHitPoints,
+			Integer temporaryHitPoints, Integer hitDiceTotal, String hitDiceType, Integer deathSavesSuccesses,
+			Integer deathSavesFailures, List<Weapon> attacks, List<Equipment> equipment,
+			List<PersonalityTrait> personalityTraits, List<Ideal> ideals, List<PersonalityTrait> bonds,
+			List<Flaw> flaws, List<Feature> features, List<Trait> traits) {
 		super();
 		this.characterId = characterId;
 		this.characterName = characterName;
@@ -110,7 +117,7 @@ public class Character {
 		this.skills = skills;
 		this.passivePerception = passivePerception;
 		this.languages = languages;
-		this.otherProficiences = otherProficiences;
+		SavingThrows = savingThrows;
 		this.armorClass = armorClass;
 		this.initiative = initiative;
 		this.speed = speed;
@@ -127,7 +134,8 @@ public class Character {
 		this.ideals = ideals;
 		this.bonds = bonds;
 		this.flaws = flaws;
-		this.featuresAndTraits = featuresAndTraits;
+		this.features = features;
+		this.traits = traits;
 	}
 
 	public Integer getCharacterId() {
@@ -186,12 +194,11 @@ public class Character {
 		this.race = race;
 	}
 
-	@Enumerated(EnumType.STRING)
-	public Alignment getAlignment() {
+	public ALIGNMENT getAlignment() {
 		return alignment;
 	}
 
-	public void setAlignment(Alignment alignment) {
+	public void setAlignment(ALIGNMENT alignment) {
 		this.alignment = alignment;
 	}
 
@@ -243,20 +250,20 @@ public class Character {
 		this.passivePerception = passivePerception;
 	}
 
-	public List<String> getLanguages() {
+	public List<Language> getLanguages() {
 		return languages;
 	}
 
-	public void setLanguages(List<String> languages) {
+	public void setLanguages(List<Language> languages) {
 		this.languages = languages;
 	}
 
-	public List<String> getOtherProficiences() {
-		return otherProficiences;
+	public SavingThrows getSavingThrows() {
+		return SavingThrows;
 	}
 
-	public void setOtherProficiences(List<String> otherProficiences) {
-		this.otherProficiences = otherProficiences;
+	public void setSavingThrows(SavingThrows savingThrows) {
+		SavingThrows = savingThrows;
 	}
 
 	public Integer getArmorClass() {
@@ -347,52 +354,76 @@ public class Character {
 		this.attacks = attacks;
 	}
 
-	public List<String> getEquipment() {
+	public List<Equipment> getEquipment() {
 		return equipment;
 	}
 
-	public void setEquipment(List<String> equipment) {
+	public void setEquipment(List<Equipment> equipment) {
 		this.equipment = equipment;
 	}
 
-	public List<String> getPersonalityTraits() {
+	public List<PersonalityTrait> getPersonalityTraits() {
 		return personalityTraits;
 	}
 
-	public void setPersonalityTraits(List<String> personalityTraits) {
+	public void setPersonalityTraits(List<PersonalityTrait> personalityTraits) {
 		this.personalityTraits = personalityTraits;
 	}
 
-	public List<String> getIdeals() {
+	public List<Ideal> getIdeals() {
 		return ideals;
 	}
 
-	public void setIdeals(List<String> ideals) {
+	public void setIdeals(List<Ideal> ideals) {
 		this.ideals = ideals;
 	}
 
-	public List<String> getBonds() {
+	public List<PersonalityTrait> getBonds() {
 		return bonds;
 	}
 
-	public void setBonds(List<String> bonds) {
+	public void setBonds(List<PersonalityTrait> bonds) {
 		this.bonds = bonds;
 	}
 
-	public List<String> getFlaws() {
+	public List<Flaw> getFlaws() {
 		return flaws;
 	}
 
-	public void setFlaws(List<String> flaws) {
+	public void setFlaws(List<Flaw> flaws) {
 		this.flaws = flaws;
 	}
 
-	public List<String> getFeaturesAndTraits() {
-		return featuresAndTraits;
+	public List<Feature> getFeatures() {
+		return features;
 	}
 
-	public void setFeaturesAndTraits(List<String> featuresAndTraits) {
-		this.featuresAndTraits = featuresAndTraits;
+	public void setFeatures(List<Feature> features) {
+		this.features = features;
+	}
+
+	public List<Trait> getTraits() {
+		return traits;
+	}
+
+	public void setTraits(List<Trait> traits) {
+		this.traits = traits;
+	}
+
+	@Override
+	public String toString() {
+		return "Character [characterId=" + characterId + ", characterName=" + characterName + ", className=" + className
+				+ ", level=" + level + ", background=" + background + ", playerName=" + playerName + ", race=" + race
+				+ ", alignment=" + alignment + ", experiencePoints=" + experiencePoints + ", abilities=" + abilities
+				+ ", inspiration=" + inspiration + ", proficiencyBonus=" + proficiencyBonus + ", skills=" + skills
+				+ ", passivePerception=" + passivePerception + ", languages=" + languages + ", SavingThrows="
+				+ SavingThrows + ", armorClass=" + armorClass + ", initiative=" + initiative + ", speed=" + speed
+				+ ", hitpointMaximum=" + hitpointMaximum + ", currentHitPoints=" + currentHitPoints
+				+ ", temporaryHitPoints=" + temporaryHitPoints + ", hitDiceTotal=" + hitDiceTotal + ", hitDiceType="
+				+ hitDiceType + ", deathSavesSuccesses=" + deathSavesSuccesses + ", deathSavesFailures="
+				+ deathSavesFailures + ", attacks=" + attacks + ", equipment=" + equipment + ", personalityTraits="
+				+ personalityTraits + ", ideals=" + ideals + ", bonds=" + bonds + ", flaws=" + flaws + ", features="
+				+ features + ", traits=" + traits + "]";
 	}
 
 }
